@@ -568,19 +568,55 @@
       margin-bottom: 2.5rem;
     }
 
-    .modal-pdf {
-      width: 100%;
-      height: 70vh;
-      min-height: 500px;
+    .pdf-viewer {
       border: 1px solid var(--border);
       border-radius: 2px;
       margin-bottom: 2rem;
+      background: #1a1a1a;
+      overflow: hidden;
+    }
+
+    .pdf-viewer canvas {
       display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .pdf-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      padding: 0.8rem 1.2rem;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .pdf-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      padding: 0.4rem 1rem;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .pdf-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+    .pdf-btn:disabled { opacity: 0.3; cursor: default; }
+
+    .pdf-page-info {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      min-width: 80px;
+      text-align: center;
     }
 
     @media (max-width: 768px) {
       .modal-info-grid { grid-template-columns: 1fr; }
-      .modal-pdf { height: 50vh; }
     }
 
     .modal-close {
@@ -996,9 +1032,16 @@
         </div>
       </div>
 
-      <!-- 研修資料PDF（1ページずつ閲覧可） -->
+      <!-- 研修資料PDF（1ページずつ） -->
       <p class="modal-section-label">研修資料</p>
-      <iframe src="/training.pdf" class="modal-pdf" title="研修資料PDF"></iframe>
+      <div class="pdf-viewer">
+        <canvas id="pdfCanvas"></canvas>
+        <div class="pdf-controls">
+          <button class="pdf-btn" id="pdfPrev">← 前へ</button>
+          <span class="pdf-page-info" id="pdfPageInfo">— / —</span>
+          <button class="pdf-btn" id="pdfNext">次へ →</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1044,6 +1087,49 @@
   </footer>
 
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // PDF viewer
+    (function() {
+      const PDFJS_URL = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs';
+      const WORKER_URL = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs';
+
+      let pdfDoc = null, currentPage = 1, rendering = false;
+      const canvas = document.getElementById('pdfCanvas');
+      const ctx = canvas.getContext('2d');
+      const prevBtn = document.getElementById('pdfPrev');
+      const nextBtn = document.getElementById('pdfNext');
+      const pageInfo = document.getElementById('pdfPageInfo');
+
+      async function loadPdf() {
+        if (pdfDoc) return;
+        const { GlobalWorkerOptions, getDocument } = await import(PDFJS_URL);
+        GlobalWorkerOptions.workerSrc = WORKER_URL;
+        pdfDoc = await getDocument('/training.pdf').promise;
+        renderPage(1);
+      }
+
+      async function renderPage(num) {
+        if (rendering) return;
+        rendering = true;
+        const page = await pdfDoc.getPage(num);
+        const vp = page.getViewport({ scale: canvas.parentElement.clientWidth / page.getViewport({ scale: 1 }).width });
+        canvas.width  = vp.width;
+        canvas.height = vp.height;
+        await page.render({ canvasContext: ctx, viewport: vp }).promise;
+        currentPage = num;
+        pageInfo.textContent = `${num} / ${pdfDoc.numPages}`;
+        prevBtn.disabled = num <= 1;
+        nextBtn.disabled = num >= pdfDoc.numPages;
+        rendering = false;
+      }
+
+      prevBtn.addEventListener('click', () => { if (currentPage > 1) renderPage(currentPage - 1); });
+      nextBtn.addEventListener('click', () => { if (pdfDoc && currentPage < pdfDoc.numPages) renderPage(currentPage + 1); });
+
+      // モーダルを開いたときに初回ロード
+      document.getElementById('trainingModal').addEventListener('transitionend', loadPdf);
+      document.querySelector('[onclick*="trainingModal"]').addEventListener('click', loadPdf);
+    })();
+
     // NAV scroll effect
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
