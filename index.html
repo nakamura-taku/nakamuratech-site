@@ -220,36 +220,36 @@
     /* ── SERVICES ── */
     #services { border-top: 1px solid var(--border); }
 
+    /* services-grid: 15セル(5行×3列)を直接並べる */
     .services-grid {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      grid-template-rows: auto auto auto auto auto;
-      column-gap: 2px;
-      background: var(--border);
     }
 
-    .service-card {
+    /* 全セル共通 */
+    .sc-cell {
       background: var(--bg);
-      padding: 3.5rem;
-      position: relative;
-      overflow: hidden;
+      padding-left: 3.5rem;
+      padding-right: 3.5rem;
       transition: background 0.4s;
-      display: grid;
-      grid-row: span 5;
-      grid-template-rows: subgrid;
     }
-    .service-card:hover { background: var(--surface); }
 
-    .service-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 3px;
-      height: 0;
-      background: var(--accent);
-      transition: height 0.5s ease;
-    }
-    .service-card:hover::before { height: 100%; }
+    /* 列配置 */
+    .sc-col-1 { grid-column: 1; }
+    .sc-col-2 { grid-column: 2; border-left: 2px solid var(--border); }
+    .sc-col-3 { grid-column: 3; border-left: 2px solid var(--border); }
+
+    /* 行配置＋行ごとの縦パディング */
+    .sc-row-1 { grid-row: 1; padding-top: 3.5rem; }
+    .sc-row-2 { grid-row: 2; }
+    .sc-row-3 { grid-row: 3; }
+    .sc-row-4 { grid-row: 4; padding-bottom: 2.5rem; }
+    .sc-row-5 { grid-row: 5; padding-bottom: 3.5rem; }
+
+    /* 列ホバー: 同じ列の全セルをまとめてハイライト */
+    .services-grid:has(.sc-col-1:hover) .sc-col-1 { background: var(--surface); }
+    .services-grid:has(.sc-col-2:hover) .sc-col-2 { background: var(--surface); }
+    .services-grid:has(.sc-col-3:hover) .sc-col-3 { background: var(--surface); }
 
     .service-number {
       font-family: 'DM Serif Display', serif;
@@ -259,7 +259,9 @@
       margin-bottom: 1.5rem;
       transition: color 0.4s;
     }
-    .service-card:hover .service-number { color: var(--accent-dim); }
+    .services-grid:has(.sc-col-1:hover) .sc-col-1 .service-number,
+    .services-grid:has(.sc-col-2:hover) .sc-col-2 .service-number,
+    .services-grid:has(.sc-col-3:hover) .sc-col-3 .service-number { color: var(--accent-dim); }
 
     .service-title {
       font-family: 'DM Serif Display', serif;
@@ -305,7 +307,6 @@
     }
 
     .service-rate {
-      align-self: end;
       padding-top: 2rem;
       border-top: 1px solid var(--border);
       font-family: 'DM Mono', monospace;
@@ -798,76 +799,76 @@
     <p class="section-label" data-num="01">Services</p>
     <div class="services-grid">
 
-      <!-- 受託開発 -->
-      <div class="service-card fade-in">
+      <!-- ── COL 1: 受託開発 ── -->
+      <div class="sc-cell sc-col-1 sc-row-1 fade-in">
         <div class="service-number">01</div>
-        <div class="service-head">
-          <h2 class="service-title">Software<br>Development</h2>
-          <p class="service-title-ja">準委任型 受託開発</p>
-        </div>
-        <p class="service-desc">
-          成果物ではなく「稼働」に対して報酬が発生する準委任契約。
-          要件定義からリリースまで、チームの一員として柔軟に参加します。
-          スポット〜長期どちらも対応可能です。
-        </p>
-        <ul class="service-features">
-          <li>Webアプリ開発（Next.js / React）</li>
-          <li>業務自動化・RPA設計</li>
-          <li>データ分析・ML基盤構築</li>
-          <li>API連携・ワークフロー整備</li>
-          <li>技術顧問・コードレビュー</li>
-        </ul>
-        <div class="service-rate">
-          時給 <strong>¥6,000〜</strong> / 応相談
-        </div>
+      </div>
+      <div class="sc-cell sc-col-1 sc-row-2 service-head">
+        <h2 class="service-title">Software<br>Development</h2>
+        <p class="service-title-ja">準委任型 受託開発</p>
+      </div>
+      <p class="sc-cell sc-col-1 sc-row-3 service-desc">
+        成果物ではなく「稼働」に対して報酬が発生する準委任契約。
+        要件定義からリリースまで、チームの一員として柔軟に参加します。
+        スポット〜長期どちらも対応可能です。
+      </p>
+      <ul class="sc-cell sc-col-1 sc-row-4 service-features">
+        <li>Webアプリ開発（Next.js / React）</li>
+        <li>業務自動化・RPA設計</li>
+        <li>データ分析・ML基盤構築</li>
+        <li>API連携・ワークフロー整備</li>
+        <li>技術顧問・コードレビュー</li>
+      </ul>
+      <div class="sc-cell sc-col-1 sc-row-5 service-rate">
+        時給 <strong>¥6,000〜</strong> / 応相談
       </div>
 
-      <!-- イベントコンサル -->
-      <div class="service-card fade-in">
+      <!-- ── COL 2: イベントコンサル ── -->
+      <div class="sc-cell sc-col-2 sc-row-1 fade-in">
         <div class="service-number">02</div>
-        <div class="service-head">
-          <h2 class="service-title">Event<br>Consulting</h2>
-          <p class="service-title-ja">飲み会・交流会 コンサルティング</p>
-        </div>
-        <p class="service-desc">
-          「なんとなく飲み会をやる」から卒業しませんか。
-          目的設計・人選・場所・進行まで、参加者の満足度を最大化するイベントを
-          一緒に作ります。社内懇親会・採用イベント・ビジネス交流会に対応。
-        </p>
-        <ul class="service-features">
-          <li>イベント目的・ゴール設計</li>
-          <li>ターゲット選定と招待文作成</li>
-          <li>会場・予算・タイムライン設計</li>
-          <li>アイスブレイク・進行シナリオ</li>
-          <li>振り返りと次回改善提案</li>
-        </ul>
-        <div class="service-rate">
-          時給 <strong>¥5,000〜</strong> / 応相談
-        </div>
+      </div>
+      <div class="sc-cell sc-col-2 sc-row-2 service-head">
+        <h2 class="service-title">Event<br>Consulting</h2>
+        <p class="service-title-ja">飲み会・交流会 コンサルティング</p>
+      </div>
+      <p class="sc-cell sc-col-2 sc-row-3 service-desc">
+        「なんとなく飲み会をやる」から卒業しませんか。
+        目的設計・人選・場所・進行まで、参加者の満足度を最大化するイベントを
+        一緒に作ります。社内懇親会・採用イベント・ビジネス交流会に対応。
+      </p>
+      <ul class="sc-cell sc-col-2 sc-row-4 service-features">
+        <li>イベント目的・ゴール設計</li>
+        <li>ターゲット選定と招待文作成</li>
+        <li>会場・予算・タイムライン設計</li>
+        <li>アイスブレイク・進行シナリオ</li>
+        <li>振り返りと次回改善提案</li>
+      </ul>
+      <div class="sc-cell sc-col-2 sc-row-5 service-rate">
+        時給 <strong>¥5,000〜</strong> / 応相談
       </div>
 
-      <!-- 法人向け研修 -->
-      <div class="service-card fade-in">
+      <!-- ── COL 3: 法人向け研修 ── -->
+      <div class="sc-cell sc-col-3 sc-row-1 fade-in">
         <div class="service-number">03</div>
-        <div class="service-head">
-          <h2 class="service-title">Corporate<br>Training</h2>
-          <p class="service-title-ja">法人向け研修</p>
-        </div>
-        <p class="service-desc">
-          AIと開発ツールを使いこなす力を、組織に。
-          非エンジニアでも手を動かして学べるハンズオン研修を提供します。
-        </p>
-        <ul class="service-features">
-          <li>AIへの指示設計（プロンプト）</li>
-          <li>GitHub / Vercel 実践ハンズオン</li>
-          <li>Claude Codeによる修正ループ体験</li>
-          <li>ドメイン取得・DNS設定まで完走</li>
-          <li>半日で本番公開まで到達</li>
-        </ul>
-        <div class="service-rate">
-          <strong>¥30,000</strong> / 人（5名以上は応相談）
-          <a href="#training" class="service-training-link service-training-cta">詳細・カリキュラムを見る →</a>
-        </div>
+      </div>
+      <div class="sc-cell sc-col-3 sc-row-2 service-head">
+        <h2 class="service-title">Corporate<br>Training</h2>
+        <p class="service-title-ja">法人向け研修</p>
+      </div>
+      <p class="sc-cell sc-col-3 sc-row-3 service-desc">
+        AIと開発ツールを使いこなす力を、組織に。
+        非エンジニアでも手を動かして学べるハンズオン研修を提供します。
+      </p>
+      <ul class="sc-cell sc-col-3 sc-row-4 service-features">
+        <li>AIへの指示設計（プロンプト）</li>
+        <li>GitHub / Vercel 実践ハンズオン</li>
+        <li>Claude Codeによる修正ループ体験</li>
+        <li>ドメイン取得・DNS設定まで完走</li>
+        <li>半日で本番公開まで到達</li>
+      </ul>
+      <div class="sc-cell sc-col-3 sc-row-5 service-rate">
+        <strong>¥30,000</strong> / 人（5名以上は応相談）
+        <a href="#training" class="service-training-link service-training-cta">詳細・カリキュラムを見る →</a>
       </div>
 
     </div>
