@@ -226,12 +226,24 @@
       grid-template-columns: 1fr 1fr 1fr;
     }
 
-    /* 全セル共通 */
-    .sc-cell {
+    /* 列全体をカバーする背景レイヤー（コンテンツより下の層） */
+    .sc-bg {
+      grid-row: 1 / 6;
       background: var(--bg);
+      transition: background 0.4s;
+      pointer-events: none;
+    }
+
+    /* 列ホバー: 背景レイヤーだけ切り替える */
+    .services-grid:has(.sc-col-1:hover) .sc-bg.sc-col-1 { background: var(--surface); }
+    .services-grid:has(.sc-col-2:hover) .sc-bg.sc-col-2 { background: var(--surface); }
+    .services-grid:has(.sc-col-3:hover) .sc-bg.sc-col-3 { background: var(--surface); }
+
+    /* 全セル共通（背景は透過→下の sc-bg が見える） */
+    .sc-cell {
+      background: transparent;
       padding-left: 3.5rem;
       padding-right: 3.5rem;
-      transition: background 0.4s;
     }
 
     /* 列配置 */
@@ -245,11 +257,6 @@
     .sc-row-3 { grid-row: 3; }
     .sc-row-4 { grid-row: 4; padding-bottom: 2.5rem; }
     .sc-row-5 { grid-row: 5; padding-bottom: 3.5rem; }
-
-    /* 列ホバー: 同じ列の全セルをまとめてハイライト */
-    .services-grid:has(.sc-col-1:hover) .sc-col-1 { background: var(--surface); }
-    .services-grid:has(.sc-col-2:hover) .sc-col-2 { background: var(--surface); }
-    .services-grid:has(.sc-col-3:hover) .sc-col-3 { background: var(--surface); }
 
     .service-number {
       font-family: 'DM Serif Display', serif;
@@ -798,6 +805,11 @@
   <section id="services">
     <p class="section-label" data-num="01">Services</p>
     <div class="services-grid">
+
+      <!-- 列背景レイヤー（全行スパン・ホバー色切替用） -->
+      <div class="sc-bg sc-col-1" aria-hidden="true"></div>
+      <div class="sc-bg sc-col-2" aria-hidden="true"></div>
+      <div class="sc-bg sc-col-3" aria-hidden="true"></div>
 
       <!-- ── COL 1: 受託開発 ── -->
       <div class="sc-cell sc-col-1 sc-row-1 fade-in">
