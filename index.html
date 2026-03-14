@@ -704,21 +704,27 @@
     }
 
     .modal-apply-btn {
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 0.6rem;
-      padding: 0.9rem 2rem;
+      justify-content: center;
+      gap: 0.8rem;
+      width: 100%;
+      padding: 1.1rem 2rem;
       background: var(--accent);
       color: var(--bg);
       font-family: 'DM Mono', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
+      font-size: 0.85rem;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       text-decoration: none;
       border-radius: 2px;
-      transition: opacity 0.2s;
+      transition: opacity 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 20px rgba(200,168,107,0.25);
     }
-    .modal-apply-btn:hover { opacity: 0.85; }
+    .modal-apply-btn:hover {
+      opacity: 0.9;
+      box-shadow: 0 0 32px rgba(200,168,107,0.45);
+    }
 
     /* ── CONTACT ── */
     #contact {
