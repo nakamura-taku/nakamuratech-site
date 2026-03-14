@@ -223,9 +223,9 @@
     .services-grid {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 2px;
+      grid-template-rows: auto auto auto auto auto;
+      column-gap: 2px;
       background: var(--border);
-      align-items: stretch;
     }
 
     .service-card {
@@ -234,8 +234,10 @@
       position: relative;
       overflow: hidden;
       transition: background 0.4s;
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-row: span 5;
+      grid-template-rows: subgrid;
+      align-content: start;
     }
     .service-card:hover { background: var(--surface); }
 
@@ -267,11 +269,14 @@
       line-height: 1.2;
       margin-bottom: 0.5rem;
     }
+    .service-head {
+      margin-bottom: 1.8rem;
+    }
+
     .service-title-ja {
       font-size: 0.78rem;
       color: var(--muted);
       letter-spacing: 0.08em;
-      margin-bottom: 1.8rem;
     }
     .service-desc {
       font-size: 0.9rem;
@@ -300,11 +305,8 @@
       color: var(--accent);
     }
 
-    .service-card-body {
-      flex: 1;
-    }
-
     .service-rate {
+      align-self: end;
       padding-top: 2rem;
       border-top: 1px solid var(--border);
       font-family: 'DM Mono', monospace;
@@ -799,23 +801,23 @@
 
       <!-- 受託開発 -->
       <div class="service-card fade-in">
-        <div class="service-card-body">
-          <div class="service-number">01</div>
+        <div class="service-number">01</div>
+        <div class="service-head">
           <h2 class="service-title">Software<br>Development</h2>
           <p class="service-title-ja">準委任型 受託開発</p>
-          <p class="service-desc">
-            成果物ではなく「稼働」に対して報酬が発生する準委任契約。
-            要件定義からリリースまで、チームの一員として柔軟に参加します。
-            スポット〜長期どちらも対応可能です。
-          </p>
-          <ul class="service-features">
-            <li>Webアプリ開発（Next.js / React）</li>
-            <li>業務自動化・RPA設計</li>
-            <li>データ分析・ML基盤構築</li>
-            <li>API連携・ワークフロー整備</li>
-            <li>技術顧問・コードレビュー</li>
-          </ul>
         </div>
+        <p class="service-desc">
+          成果物ではなく「稼働」に対して報酬が発生する準委任契約。
+          要件定義からリリースまで、チームの一員として柔軟に参加します。
+          スポット〜長期どちらも対応可能です。
+        </p>
+        <ul class="service-features">
+          <li>Webアプリ開発（Next.js / React）</li>
+          <li>業務自動化・RPA設計</li>
+          <li>データ分析・ML基盤構築</li>
+          <li>API連携・ワークフロー整備</li>
+          <li>技術顧問・コードレビュー</li>
+        </ul>
         <div class="service-rate">
           時給 <strong>¥6,000〜</strong> / 応相談
         </div>
@@ -823,23 +825,23 @@
 
       <!-- イベントコンサル -->
       <div class="service-card fade-in">
-        <div class="service-card-body">
-          <div class="service-number">02</div>
+        <div class="service-number">02</div>
+        <div class="service-head">
           <h2 class="service-title">Event<br>Consulting</h2>
           <p class="service-title-ja">飲み会・交流会 コンサルティング</p>
-          <p class="service-desc">
-            「なんとなく飲み会をやる」から卒業しませんか。
-            目的設計・人選・場所・進行まで、参加者の満足度を最大化するイベントを
-            一緒に作ります。社内懇親会・採用イベント・ビジネス交流会に対応。
-          </p>
-          <ul class="service-features">
-            <li>イベント目的・ゴール設計</li>
-            <li>ターゲット選定と招待文作成</li>
-            <li>会場・予算・タイムライン設計</li>
-            <li>アイスブレイク・進行シナリオ</li>
-            <li>振り返りと次回改善提案</li>
-          </ul>
         </div>
+        <p class="service-desc">
+          「なんとなく飲み会をやる」から卒業しませんか。
+          目的設計・人選・場所・進行まで、参加者の満足度を最大化するイベントを
+          一緒に作ります。社内懇親会・採用イベント・ビジネス交流会に対応。
+        </p>
+        <ul class="service-features">
+          <li>イベント目的・ゴール設計</li>
+          <li>ターゲット選定と招待文作成</li>
+          <li>会場・予算・タイムライン設計</li>
+          <li>アイスブレイク・進行シナリオ</li>
+          <li>振り返りと次回改善提案</li>
+        </ul>
         <div class="service-rate">
           時給 <strong>¥5,000〜</strong> / 応相談
         </div>
@@ -847,14 +849,16 @@
 
       <!-- 法人向け研修 -->
       <div class="service-card fade-in">
-        <div class="service-card-body">
-          <div class="service-number">03</div>
+        <div class="service-number">03</div>
+        <div class="service-head">
           <h2 class="service-title">Corporate<br>Training</h2>
           <p class="service-title-ja">法人向け研修</p>
-          <p class="service-desc">
-            AIと開発ツールを使いこなす力を、組織に。
-            非エンジニアでも手を動かして学べるハンズオン研修を提供します。
-          </p>
+        </div>
+        <p class="service-desc">
+          AIと開発ツールを使いこなす力を、組織に。
+          非エンジニアでも手を動かして学べるハンズオン研修を提供します。
+        </p>
+        <div class="service-features-area">
           <ul class="service-features">
             <li>AIへの指示設計（プロンプト）</li>
             <li>GitHub / Vercel 実践ハンズオン</li>
