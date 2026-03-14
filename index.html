@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NakamuraTech</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --border: #2a2a2a;
+      --text: #e8e4dc;
+      --muted: #6b6660;
+      --accent: #c8a86b;
+      --accent-dim: rgba(200,168,107,0.12);
+      --white: #f5f1ea;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── GRAIN OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 3rem;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.4s, background 0.4s;
+    }
+    nav.scrolled {
+      border-color: var(--border);
+      background: rgba(13,13,13,0.85);
+      backdrop-filter: blur(12px);
+    }
+
+    .logo {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.4rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 10rem 3rem 6rem;
+      gap: 4rem;
+      position: relative;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 20%;
+      right: -10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(200,168,107,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .hero-label::before {
+      content: '';
+      width: 28px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3.2rem, 6vw, 5.5rem);
+      line-height: 1.08;
+      color: var(--white);
+      margin-bottom: 2rem;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 38ch;
+      line-height: 1.9;
+    }
+
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: flex-start;
+      padding-top: 4rem;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      border-radius: 2px;
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero-tag:nth-child(1) { animation-delay: 0.2s; }
+    .hero-tag:nth-child(2) { animation-delay: 0.35s; }
+    .hero-tag:nth-child(3) { animation-delay: 0.5s; }
+    .hero-tag .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      animation: scrollBounce 2s ease-in-out infinite;
+    }
+    .hero-scroll::after {
+      content: '';
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--muted), transparent);
+    }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 7rem 3rem; }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 3.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .section-label::before {
+      content: attr(data-num);
+      opacity: 0.4;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+      max-width: 80px;
+    }
+
+    /* ── SERVICES ── */
+    #services { border-top: 1px solid var(--border); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: var(--border);
+    }
+
+    .service-card {
+      background: var(--bg);
+      padding: 3.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s;
+    }
+    .service-card:hover { background: var(--surface); }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      transition: height 0.5s ease;
+    }
+    .service-card:hover::before { height: 100%; }
+
+    .service-number {
+      font-family: 'DM Serif Display', serif;
+      font-size: 5rem;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+      transition: color 0.4s;
+    }
+    .service-card:hover .service-number { color: var(--accent-dim); }
+
+    .service-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.9rem;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+    .service-title-ja {
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      margin-bottom: 1.8rem;
+    }
+    .service-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.9;
+      margin-bottom: 2.5rem;
+    }
+
+    .service-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .service-features li {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .service-features li::before {
+      content: '→';
+      color: var(--accent);
+    }
+
+    .service-rate {
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+    .service-rate strong {
+      font-size: 1.4rem;
+      color: var(--accent);
+      letter-spacing: 0;
+      font-weight: 500;
+    }
+
+    /* ── ABOUT ── */
+    #about { border-top: 1px solid var(--border); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 6rem;
+      align-items: start;
+    }
+    .about-heading {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      color: var(--white);
+      line-height: 1.15;
+    }
+    .about-heading em { font-style: italic; color: var(--accent); }
+
+    .about-body p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.95;
+      margin-bottom: 1.4rem;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+      margin-top: 2.5rem;
+    }
+    .skill-chip {
+      padding: 0.45rem 0.9rem;
+      border: 1px solid var(--border);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      border-radius: 2px;
+      text-align: center;
+    }
+
+    /* ── WORKS ── */
+    #works { border-top: 1px solid var(--border); }
+
+    .works-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .work-item {
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      align-items: center;
+      gap: 2rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: padding-left 0.3s;
+      cursor: default;
+    }
+    .work-item:hover { padding-left: 1rem; }
+
+    .work-year {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+    .work-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      color: var(--white);
+    }
+    .work-name span {
+      display: block;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 300;
+      margin-top: 0.2rem;
+    }
+    .work-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      padding: 0.3rem 0.8rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 8rem 3rem;
+      position: relative;
+    }
+    #contact::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%; transform: translateX(-50%);
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(200,168,107,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .contact-heading {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+    .contact-heading em { font-style: italic; color: var(--accent); }
+
+    .contact-sub {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 3rem;
+    }
+
+    .contact-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 1rem 2.2rem;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: background 0.3s, color 0.3s;
+    }
+    .contact-btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+    .contact-btn svg { width: 14px; height: 14px; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    footer span {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scrollBounce {
+      0%, 100% { opacity: 0.4; transform: translateX(-50%) translateY(0); }
+      50%       { opacity: 0.8; transform: translateX(-50%) translateY(6px); }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 8rem 1.5rem 5rem; gap: 2.5rem; }
+      .hero::after { display: none; }
+      section { padding: 5rem 1.5rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .work-item { grid-template-columns: 60px 1fr; }
+      .work-tag { display: none; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <span class="logo">NakamuraTech</span>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#works">Works</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-left">
+      <p class="hero-label">Freelance · 個人事業</p>
+      <h1 class="hero-title">Tech &amp;<br><em>People.</em></h1>
+      <p class="hero-sub">
+        システム開発からイベント設計まで。<br>
+        準委任契約による柔軟な受託開発と、<br>
+        飲み会・交流会のコンサルティングを提供します。
+      </p>
+    </div>
+    <div class="hero-right">
+      <div class="hero-tag"><span class="dot"></span> 準委任 / 時給ベース</div>
+      <div class="hero-tag"><span class="dot"></span> Web · Automation · Data</div>
+      <div class="hero-tag"><span class="dot"></span> Event Consulting</div>
+    </div>
+    <div class="hero-scroll">scroll</div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <p class="section-label" data-num="01">Services</p>
+    <div class="services-grid">
+
+      <!-- 受託開発 -->
+      <div class="service-card fade-in">
+        <div class="service-number">01</div>
+        <h2 class="service-title">Software<br>Development</h2>
+        <p class="service-title-ja">準委任型 受託開発</p>
+        <p class="service-desc">
+          成果物ではなく「稼働」に対して報酬が発生する準委任契約。
+          要件定義からリリースまで、チームの一員として柔軟に参加します。
+          スポット〜長期どちらも対応可能です。
+        </p>
+        <ul class="service-features">
+          <li>Webアプリ開発（Next.js / React）</li>
+          <li>業務自動化・RPA設計</li>
+          <li>データ分析・ML基盤構築</li>
+          <li>API連携・ワークフロー整備</li>
+          <li>技術顧問・コードレビュー</li>
+        </ul>
+        <div class="service-rate">
+          時給 <strong>¥6,000〜</strong> / 応相談
+        </div>
+      </div>
+
+      <!-- イベントコンサル -->
+      <div class="service-card fade-in">
+        <div class="service-number">02</div>
+        <h2 class="service-title">Event<br>Consulting</h2>
+        <p class="service-title-ja">飲み会・交流会 コンサルティング</p>
+        <p class="service-desc">
+          「なんとなく飲み会をやる」から卒業しませんか。
+          目的設計・人選・場所・進行まで、参加者の満足度を最大化するイベントを
+          一緒に作ります。社内懇親会・採用イベント・ビジネス交流会に対応。
+        </p>
+        <ul class="service-features">
+          <li>イベント目的・ゴール設計</li>
+          <li>ターゲット選定と招待文作成</li>
+          <li>会場・予算・タイムライン設計</li>
+          <li>アイスブレイク・進行シナリオ</li>
+          <li>振り返りと次回改善提案</li>
+        </ul>
+        <div class="service-rate">
+          時給 <strong>¥5,000〜</strong> / 応相談
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-label" data-num="02">About</p>
+    <div class="about-grid">
+      <div>
+        <h2 class="about-heading">
+          Code<br>meets<br><em>Community.</em>
+        </h2>
+      </div>
+      <div class="about-body fade-in">
+        <p>
+          NakamuraTechは、エンジニアリングとひとが集まる場づくりの両方を手がける個人事業です。
+          日系大手企業でのプロダクト開発・マーケティング経験を持ちながら、
+          フリーランスとしてスタートアップや中小企業のプロジェクトに参画しています。
+        </p>
+        <p>
+          技術的な課題はもちろん、「チームをどう動かすか」「イベントをどう設計するか」といった
+          人間的な問いにも同じ熱量で向き合います。
+          要件定義から実装、そして人が集まる場のデザインまで、一貫してお手伝いします。
+        </p>
+        <div class="skills-grid">
+          <div class="skill-chip">Next.js / React</div>
+          <div class="skill-chip">TypeScript</div>
+          <div class="skill-chip">Python / ML</div>
+          <div class="skill-chip">GAS / Power Automate</div>
+          <div class="skill-chip">Event Design</div>
+          <div class="skill-chip">Project Mgmt</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKS -->
+  <section id="works">
+    <p class="section-label" data-num="03">Selected Works</p>
+    <div class="works-list">
+      <div class="work-item fade-in">
+        <span class="work-year">2025</span>
+        <div class="work-name">
+          ML Auto Analyzer
+          <span>機械学習分析・スライド自動生成 Webサービス</span>
+        </div>
+        <span class="work-tag">Dev</span>
+      </div>
+      <div class="work-item fade-in">
+        <span class="work-year">2025</span>
+        <div class="work-name">
+          Teams Recording Sync
+          <span>Power Automate × SharePoint 自動化フロー</span>
+        </div>
+        <span class="work-tag">Automation</span>
+      </div>
+      <div class="work-item fade-in">
+        <span class="work-year">2024</span>
+        <div class="work-name">
+          Warehouse Forecasting
+          <span>SARIMAX × ML 自動車メーカー向け需要予測</span>
+        </div>
+        <span class="work-tag">Data / ML</span>
+      </div>
+      <div class="work-item fade-in">
+        <span class="work-year">2024</span>
+        <div class="work-name">
+          社内懇親会リデザイン
+          <span>300名規模イベントの目的設計〜進行改善</span>
+        </div>
+        <span class="work-tag">Event</span>
+      </div>
+      <div class="work-item fade-in">
+        <span class="work-year">2024</span>
+        <div class="work-name">
+          PIA SaaS Wireframe
+          <span>プライバシー影響評価 SaaS UI設計</span>
+        </div>
+        <span class="work-tag">Design</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <h2 class="contact-heading">Let's<br><em>Work Together.</em></h2>
+    <p class="contact-sub">まずはカジュアルにご相談ください。</p>
+    <a class="contact-btn" href="mailto:contact@nakamuratech.jp">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+      </svg>
+      contact@nakamuratech.jp
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2025 NakamuraTech. All rights reserved.</span>
+    <span>Tokyo, Japan</span>
+  </footer>
+
+  <script>
+    // NAV scroll effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Scroll fade-in
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); }
+      }),
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
