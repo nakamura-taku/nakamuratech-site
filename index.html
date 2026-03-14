@@ -481,9 +481,13 @@
     }
 
     .fade-in {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.animate {
       opacity: 0;
       transform: translateY(24px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
     }
     .fade-in.visible {
       opacity: 1;
@@ -670,5 +674,21 @@
     });
 
     // Scroll fade-in
+    const fadeEls = document.querySelectorAll('.fade-in');
+    fadeEls.forEach(el => el.classList.add('animate'));
+
     const observer = new IntersectionObserver(
-      en
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    fadeEls.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
