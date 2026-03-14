@@ -1119,6 +1119,7 @@
         pageInfo.textContent = `${num} / ${pdfDoc.numPages}`;
         prevBtn.disabled = num <= 1;
         nextBtn.disabled = num >= pdfDoc.numPages;
+        canvas.style.filter = num >= 7 ? 'blur(8px)' : 'none';
         rendering = false;
       }
 
