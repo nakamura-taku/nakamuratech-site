@@ -404,6 +404,236 @@
       white-space: nowrap;
     }
 
+    /* ── TRAINING ── */
+    #training { border-top: 1px solid var(--border); }
+
+    .training-heading {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 2.5rem;
+    }
+
+    .training-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 3.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s;
+      max-width: 720px;
+    }
+    .training-card:hover { background: var(--surface); }
+    .training-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      transition: height 0.5s ease;
+    }
+    .training-card:hover::before { height: 100%; }
+
+    .training-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.9rem;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+    }
+
+    .training-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.6rem;
+      color: var(--white);
+      line-height: 1.3;
+      margin-bottom: 1.5rem;
+    }
+
+    .training-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      margin-bottom: 1.8rem;
+    }
+    .training-meta-item {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .training-meta-item::before {
+      content: '◆';
+      font-size: 0.45rem;
+      color: var(--accent);
+    }
+
+    .training-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.9;
+      margin-bottom: 2rem;
+    }
+
+    .training-detail-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.75rem 1.6rem;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      cursor: pointer;
+      background: transparent;
+      transition: background 0.3s, color 0.3s;
+    }
+    .training-detail-btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+    .training-detail-btn::after { content: '→'; }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      max-width: 640px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 3rem;
+      position: relative;
+      border-radius: 2px;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1.2rem; right: 1.4rem;
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 1.4rem;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+    .modal-close:hover { color: var(--text); }
+
+    .modal-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      color: var(--white);
+      line-height: 1.3;
+      margin-bottom: 2rem;
+    }
+
+    .modal-section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .curriculum-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin-bottom: 2rem;
+    }
+    .curriculum-list li {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      font-size: 0.88rem;
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .curriculum-step {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      padding: 0.2rem 0.5rem;
+      border: 1px solid var(--accent);
+      border-radius: 2px;
+      white-space: nowrap;
+      margin-top: 0.1rem;
+    }
+
+    .modal-outcomes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+    }
+    .outcome-chip {
+      padding: 0.4rem 0.9rem;
+      border: 1px solid var(--border);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      border-radius: 2px;
+    }
+
+    .modal-price {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      margin-bottom: 1.8rem;
+      padding: 1rem 1.2rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+    }
+
+    .modal-apply-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.9rem 2rem;
+      background: var(--accent);
+      color: var(--bg);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: opacity 0.2s;
+    }
+    .modal-apply-btn:hover { opacity: 0.85; }
+
     /* ── CONTACT ── */
     #contact {
       border-top: 1px solid var(--border);
@@ -519,6 +749,7 @@
       <li><a href="#services">Services</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#works">Works</a></li>
+      <li><a href="#training">研修</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
@@ -626,9 +857,57 @@
     </div>
   </section>
 
+  <!-- TRAINING -->
+  <section id="training">
+    <p class="section-label" data-num="04">Training</p>
+    <h2 class="training-heading fade-in">法人向け研修</h2>
+    <div class="training-card fade-in">
+      <div class="training-badge">Claude Code × GitHub × Vercel</div>
+      <h3 class="training-title">AIと一緒に、半日でWebサイトを<br>本番公開する</h3>
+      <div class="training-meta">
+        <span class="training-meta-item">対象：非エンジニア・DX推進担当・フリーランス志望</span>
+        <span class="training-meta-item">所要時間：半日（約4時間）</span>
+        <span class="training-meta-item">形式：ハンズオン（手を動かす実践型）</span>
+      </div>
+      <p class="training-desc">
+        AIへの指示設計からGitHub・Vercel・独自ドメイン設定まで、実際に手を動かして本番公開まで完走する研修です。コードが書けなくても参加できます。
+      </p>
+      <button class="training-detail-btn" onclick="document.getElementById('trainingModal').classList.add('open')">詳細を見る</button>
+    </div>
+  </section>
+
+  <!-- TRAINING MODAL -->
+  <div class="modal-overlay" id="trainingModal" onclick="if(event.target===this)this.classList.remove('open')">
+    <div class="modal">
+      <button class="modal-close" onclick="document.getElementById('trainingModal').classList.remove('open')">×</button>
+      <h2 class="modal-title">AIと一緒に、半日でWebサイトを本番公開する</h2>
+
+      <p class="modal-section-label">カリキュラム</p>
+      <ul class="curriculum-list">
+        <li><span class="curriculum-step">Step 01</span>GitHubにコードを保管する</li>
+        <li><span class="curriculum-step">Step 02</span>Vercelでサイトを公開する</li>
+        <li><span class="curriculum-step">Step 03</span>独自ドメインを取得する</li>
+        <li><span class="curriculum-step">Step 04</span>DNS設定でドメインを紐付ける</li>
+        <li><span class="curriculum-step">Step 05</span>Claude Codeで修正→自動反映</li>
+      </ul>
+
+      <p class="modal-section-label">受講後に得られるもの</p>
+      <div class="modal-outcomes">
+        <span class="outcome-chip">動くWebサイト</span>
+        <span class="outcome-chip">GitHub管理環境</span>
+        <span class="outcome-chip">AI修正ループの体験</span>
+      </div>
+
+      <p class="modal-section-label">料金</p>
+      <div class="modal-price">お問い合わせください</div>
+
+      <a class="modal-apply-btn" href="#contact" onclick="document.getElementById('trainingModal').classList.remove('open')">申し込む →</a>
+    </div>
+  </div>
+
   <!-- WORKS -->
   <section id="works">
-    <p class="section-label" data-num="03">Selected Works</p>
+    <p class="section-label" data-num="05">Selected Works</p>
     <div class="works-list">
       <div class="work-item fade-in">
         <span class="work-year">2024</span>
