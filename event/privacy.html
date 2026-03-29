@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>プライバシーポリシー — QuizAir</title>
+  <meta name="description" content="QuizAir プライバシーポリシー" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --border: #2a2a2a;
+      --accent: #c8a86b;
+      --text: #e8e4dc;
+      --muted: #6b6660;
+      --white: #f5f2ec;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 300;
+      line-height: 1.8;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.5rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,13,13,0.92);
+      backdrop-filter: blur(12px);
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .nav-back {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--accent); }
+
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 8rem 2rem 6rem;
+    }
+
+    .page-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--white);
+      margin-bottom: 0.4rem;
+      line-height: 1.2;
+    }
+    .page-sub {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .policy-section {
+      margin-bottom: 2.8rem;
+    }
+    .policy-section h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.15rem;
+      color: var(--white);
+      margin-bottom: 0.8rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .policy-section p {
+      font-size: 0.9rem;
+      color: var(--text);
+      margin-bottom: 0.8rem;
+    }
+    .policy-section ul {
+      padding-left: 1.4rem;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+    .policy-section ul li {
+      margin-bottom: 0.4rem;
+    }
+    .policy-section a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .policy-section a:hover {
+      text-decoration: underline;
+    }
+
+    .last-updated {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    footer a:hover { color: var(--accent); }
+    .footer-links { display: flex; gap: 2rem; }
+
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      footer { flex-direction: column; gap: 0.8rem; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/event/" class="nav-logo">QuizAir</a>
+    <a href="/event/" class="nav-back">← QuizAir Top</a>
+  </nav>
+
+  <main>
+    <h1 class="page-title">Privacy Policy</h1>
+    <p class="page-sub">プライバシーポリシー — QuizAir</p>
+
+    <div class="policy-section">
+      <h2>はじめに</h2>
+      <p>
+        Taku Nakamura（以下「運営者」）が提供するアプリケーション「QuizAir」（以下「本アプリ」）は、
+        ユーザーのプライバシーを尊重し、個人情報の適切な保護に努めます。
+        本プライバシーポリシーは、本アプリが収集する情報、その利用目的、および管理方法について説明します。
+      </p>
+    </div>
+
+    <div class="policy-section">
+      <h2>運営者情報</h2>
+      <ul>
+        <li>アプリ名：QuizAir</li>
+        <li>運営者：Taku Nakamura</li>
+        <li>お問い合わせ：<a href="mailto:taku_nakamura@rtc-rcloud.jp">taku_nakamura@rtc-rcloud.jp</a></li>
+      </ul>
+    </div>
+
+    <div class="policy-section">
+      <h2>収集する情報</h2>
+      <p>本アプリは、以下の情報を収集することがあります。</p>
+      <ul>
+        <li>
+          <strong>ニックネーム</strong>：イベント参加時にユーザーが任意で入力するニックネーム。
+          本名や個人を特定できる情報の入力は不要です。
+        </li>
+        <li>
+          <strong>Googleアカウント情報（任意）</strong>：Google でのサインインを選択した場合に、
+          Google OAuth 2.0 を通じて取得するアカウント識別子・メールアドレス・表示名。
+          サインインはオプションであり、必須ではありません。
+        </li>
+        <li>
+          <strong>Appleアカウント情報（任意）</strong>：Apple でのサインインを選択した場合に、
+          Apple Sign In を通じて取得するアカウント識別子・メールアドレス（Appleの匿名メール中継を含む）・表示名。
+          サインインはオプションであり、必須ではありません。
+        </li>
+        <li>
+          <strong>利用ログ</strong>：アプリの安定動作のために、エラー情報や匿名の利用統計を収集することがあります。
+          これらは個人を直接特定する情報を含みません。
+        </li>
+      </ul>
+    </div>
+
+    <div class="policy-section">
+      <h2>情報の利用目的</h2>
+      <p>収集した情報は、以下の目的のみに利用します。</p>
+      <ul>
+        <li>イベントへの参加機能およびクイズ機能の提供</li>
+        <li>ログイン状態の維持とアカウント管理</li>
+        <li>アプリの品質向上・バグ修正・機能改善</li>
+        <li>ユーザーからのお問い合わせへの対応</li>
+      </ul>
+      <p>上記以外の目的での利用は行いません。</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>第三者への提供</h2>
+      <p>
+        運営者は、以下のいずれかに該当する場合を除き、収集した個人情報を第三者に提供・開示・売却しません。
+      </p>
+      <ul>
+        <li>ユーザー本人の同意がある場合</li>
+        <li>法令に基づき開示が必要な場合</li>
+        <li>人の生命・身体・財産の保護のために必要で、本人の同意を得ることが困難な場合</li>
+      </ul>
+    </div>
+
+    <div class="policy-section">
+      <h2>利用するサードパーティサービス</h2>
+      <p>本アプリは以下のサービスを利用する場合があります。各サービスのプライバシーポリシーもご確認ください。</p>
+      <ul>
+        <li>Google Sign-In（Google LLC）— <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google プライバシーポリシー</a></li>
+        <li>Sign in with Apple（Apple Inc.）— <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener noreferrer">Apple プライバシーポリシー</a></li>
+      </ul>
+    </div>
+
+    <div class="policy-section">
+      <h2>データの保存と管理</h2>
+      <p>
+        収集した情報は、安全なサーバーに暗号化して保存します。
+        不正アクセス・紛失・破壊・改ざん等を防ぐため、適切なセキュリティ対策を講じています。
+        ただし、インターネット上での完全な安全を保証することはできません。
+      </p>
+    </div>
+
+    <div class="policy-section">
+      <h2>データの保持と削除</h2>
+      <p>
+        アカウント情報は、ユーザーがアカウントを削除するまで保持されます。
+        ニックネーム等のゲストデータは、イベント終了後に自動削除または匿名化されます。
+        データの削除をご希望の場合は、下記お問い合わせ先までご連絡ください。
+      </p>
+    </div>
+
+    <div class="policy-section">
+      <h2>お子様のプライバシー</h2>
+      <p>
+        本アプリは13歳未満のお子様を対象としていません。
+        13歳未満の方から意図せず個人情報を収集したことが判明した場合、速やかに削除します。
+      </p>
+    </div>
+
+    <div class="policy-section">
+      <h2>ユーザーの権利</h2>
+      <p>ユーザーは以下の権利を有します。</p>
+      <ul>
+        <li>収集された個人情報の開示・確認を求める権利</li>
+        <li>個人情報の訂正・削除を求める権利</li>
+        <li>アカウントおよびデータの削除を求める権利</li>
+      </ul>
+      <p>権利行使をご希望の場合は、下記お問い合わせ先までご連絡ください。</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>ポリシーの変更</h2>
+      <p>
+        本プライバシーポリシーは、法令の変更やサービスの改善に伴い、予告なく変更することがあります。
+        重要な変更がある場合は、アプリ内またはウェブサイト上でお知らせします。
+        変更後も本アプリを継続してご利用いただいた場合、改訂されたポリシーに同意したものとみなします。
+      </p>
+    </div>
+
+    <div class="policy-section">
+      <h2>お問い合わせ</h2>
+      <p>
+        本プライバシーポリシーに関するご質問・ご要望は、以下の連絡先までお問い合わせください。
+      </p>
+      <ul>
+        <li>運営者：Taku Nakamura</li>
+        <li>メール：<a href="mailto:taku_nakamura@rtc-rcloud.jp">taku_nakamura@rtc-rcloud.jp</a></li>
+      </ul>
+    </div>
+
+    <p class="last-updated">最終更新日：2024年1月1日</p>
+  </main>
+
+  <footer>
+    <span>© 2024 QuizAir — NakamuraTech</span>
+    <div class="footer-links">
+      <a href="/event/privacy.html">プライバシーポリシー</a>
+      <a href="/event/">QuizAir Top</a>
+    </div>
+  </footer>
+
+</body>
+</html>

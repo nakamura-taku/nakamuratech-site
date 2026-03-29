@@ -220,10 +220,10 @@
     /* ── SERVICES ── */
     #services { border-top: 1px solid var(--border); }
 
-    /* services-grid: 15セル(5行×3列)を直接並べる */
+    /* services-grid: 20セル(5行×4列)を直接並べる */
     .services-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
     }
 
     /* 列全体をカバーする背景レイヤー（コンテンツより下の層） */
@@ -238,6 +238,7 @@
     .services-grid:has(.sc-col-1:hover) .sc-bg.sc-col-1 { background: var(--surface); }
     .services-grid:has(.sc-col-2:hover) .sc-bg.sc-col-2 { background: var(--surface); }
     .services-grid:has(.sc-col-3:hover) .sc-bg.sc-col-3 { background: var(--surface); }
+    .services-grid:has(.sc-col-4:hover) .sc-bg.sc-col-4 { background: var(--surface); }
 
     /* 全セル共通（背景は透過→下の sc-bg が見える） */
     .sc-cell {
@@ -250,6 +251,7 @@
     .sc-col-1 { grid-column: 1; }
     .sc-col-2 { grid-column: 2; border-left: 2px solid var(--border); }
     .sc-col-3 { grid-column: 3; border-left: 2px solid var(--border); }
+    .sc-col-4 { grid-column: 4; border-left: 2px solid var(--border); }
 
     /* 行配置＋行ごとの縦パディング */
     .sc-row-1 { grid-row: 1; padding-top: 3.5rem; }
@@ -268,7 +270,8 @@
     }
     .services-grid:has(.sc-col-1:hover) .sc-col-1 .service-number,
     .services-grid:has(.sc-col-2:hover) .sc-col-2 .service-number,
-    .services-grid:has(.sc-col-3:hover) .sc-col-3 .service-number { color: var(--accent-dim); }
+    .services-grid:has(.sc-col-3:hover) .sc-col-3 .service-number,
+    .services-grid:has(.sc-col-4:hover) .sc-col-4 .service-number { color: var(--accent-dim); }
 
     .service-title {
       font-family: 'DM Serif Display', serif;
@@ -923,6 +926,7 @@
       <div class="sc-bg sc-col-1" aria-hidden="true"></div>
       <div class="sc-bg sc-col-2" aria-hidden="true"></div>
       <div class="sc-bg sc-col-3" aria-hidden="true"></div>
+      <div class="sc-bg sc-col-4" aria-hidden="true"></div>
 
       <!-- ── COL 1: 受託開発 ── -->
       <div class="sc-cell sc-col-1 sc-row-1 fade-in">
@@ -996,6 +1000,30 @@
       <div class="sc-cell sc-col-3 sc-row-5 service-rate">
         <strong>¥30,000</strong> / 人（5名以上は応相談）
         <a href="#training" class="service-training-link service-training-cta">詳細・カリキュラムを見る →</a>
+      </div>
+
+      <!-- ── COL 4: イベントコンサル＆アプリ ── -->
+      <div class="sc-cell sc-col-4 sc-row-1 fade-in">
+        <div class="service-number">04</div>
+      </div>
+      <div class="sc-cell sc-col-4 sc-row-2 service-head">
+        <h2 class="service-title">Event<br>App</h2>
+        <p class="service-title-ja">イベントコンサル＆アプリ</p>
+      </div>
+      <p class="sc-cell sc-col-4 sc-row-3 service-desc">
+        飲み会・交流会をアプリでもっと楽しく。
+        イベント進行を盛り上げるクイズアプリ「QuizAir」を提供。
+        コンサルとアプリを組み合わせ、参加者全員が主役になれる場を作ります。
+      </p>
+      <ul class="sc-cell sc-col-4 sc-row-4 service-features">
+        <li>リアルタイム参加型クイズ</li>
+        <li>ニックネームで気軽に参加</li>
+        <li>Google / Apple アカウント連携</li>
+        <li>イベント進行シナリオ提案</li>
+        <li>社内懇親会・採用イベントに対応</li>
+      </ul>
+      <div class="sc-cell sc-col-4 sc-row-5 service-rate">
+        <a href="https://event.technakamura.com" target="_blank" rel="noopener noreferrer" class="service-training-link service-training-cta">QuizAirを見る →</a>
       </div>
 
     </div>

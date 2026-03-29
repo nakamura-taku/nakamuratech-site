@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuizAir — 飲み会クイズをもっと楽しく</title>
+  <meta name="description" content="QuizAirは飲み会・交流会をリアルタイムクイズで盛り上げるアプリです。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --border: #2a2a2a;
+      --accent: #c8a86b;
+      --accent-dim: #a88a50;
+      --text: #e8e4dc;
+      --muted: #6b6660;
+      --white: #f5f2ec;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.5rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,13,13,0.92);
+      backdrop-filter: blur(12px);
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+    .nav-back {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 60%, rgba(200,168,107,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3.5rem, 10vw, 7rem);
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 1.2rem;
+      letter-spacing: -0.02em;
+    }
+    .hero-logo span { color: var(--accent); }
+    .hero-tagline {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      font-weight: 300;
+      color: var(--text);
+      margin-bottom: 3rem;
+      letter-spacing: 0.05em;
+    }
+    .download-buttons {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .btn-store {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.9rem 1.8rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 400;
+      transition: border-color 0.2s, background 0.2s;
+      min-width: 180px;
+    }
+    .btn-store:hover {
+      border-color: var(--accent);
+      background: rgba(200,168,107,0.06);
+    }
+    .btn-store svg { flex-shrink: 0; }
+    .btn-store-label { text-align: left; line-height: 1.3; }
+    .btn-store-sub { display: block; font-size: 0.65rem; color: var(--muted); letter-spacing: 0.05em; }
+    .btn-store-name { display: block; font-size: 0.95rem; font-weight: 500; }
+    .coming-soon-note {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── FEATURES ── */
+    .features {
+      padding: 6rem 2rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+    }
+    .section-label::before {
+      content: attr(data-num) '  ';
+      color: var(--border);
+    }
+    .features-heading {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: var(--white);
+      margin-bottom: 3.5rem;
+      line-height: 1.2;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .feature-card {
+      background: var(--surface);
+      padding: 2.2rem 2rem;
+      border: 1px solid var(--border);
+    }
+    .feature-card:not(:first-child) { border-left: none; }
+    .feature-icon {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+    .feature-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      color: var(--white);
+      margin-bottom: 0.6rem;
+    }
+    .feature-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how-it-works {
+      padding: 6rem 2rem;
+      max-width: 960px;
+      margin: 0 auto;
+      border-top: 1px solid var(--border);
+    }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .step {
+      text-align: center;
+    }
+    .step-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 3rem;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .step-title {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+    .step-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      padding: 6rem 2rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    .cta-heading {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+    .cta-sub {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    footer a:hover { color: var(--accent); }
+    .footer-links { display: flex; gap: 2rem; }
+
+    /* ── FADE IN ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .features-grid { grid-template-columns: 1fr; }
+      .feature-card:not(:first-child) { border-left: 1px solid var(--border); border-top: none; }
+      .steps { grid-template-columns: repeat(2, 1fr); }
+      footer { flex-direction: column; gap: 0.8rem; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="https://event.technakamura.com" class="nav-logo">QuizAir</a>
+    <a href="https://technakamura.com" class="nav-back">← technakamura.com</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">Event Tech by NakamuraTech</p>
+    <h1 class="hero-logo">Quiz<span>Air</span></h1>
+    <p class="hero-tagline">飲み会クイズをもっと楽しく</p>
+    <div class="download-buttons">
+      <a href="#" class="btn-store" aria-label="App Store からダウンロード">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--white)">
+          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+        </svg>
+        <span class="btn-store-label">
+          <span class="btn-store-sub">Download on the</span>
+          <span class="btn-store-name">App Store</span>
+        </span>
+      </a>
+      <a href="#" class="btn-store" aria-label="Google Play からダウンロード">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--white)">
+          <path d="M3 20.5v-17c0-.83 1-.96 1.4-.5l13 8.5c.4.3.4.9 0 1.2l-13 8.5c-.4.46-1.4.33-1.4-.7z" opacity=".6"/>
+          <path d="M3 3.5l9 9-9 9V3.5z" opacity=".8"/>
+          <path d="M3 3.5l9 9 5-5-14-4z"/>
+          <path d="M3 20.5l9-9 5 5-14 4z" opacity=".4"/>
+        </svg>
+        <span class="btn-store-label">
+          <span class="btn-store-sub">Get it on</span>
+          <span class="btn-store-name">Google Play</span>
+        </span>
+      </a>
+    </div>
+    <p class="coming-soon-note">* Coming Soon — リンクは準備中です</p>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <p class="section-label" data-num="01">Features</p>
+    <h2 class="features-heading fade-in">場を盛り上げる、<br>３つの特徴</h2>
+    <div class="features-grid">
+      <div class="feature-card fade-in">
+        <div class="feature-icon">⚡</div>
+        <h3 class="feature-title">リアルタイム参加</h3>
+        <p class="feature-desc">スマホ１台で即参加。URLを共有するだけで、その場の全員がクイズに参加できます。</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">🎭</div>
+        <h3 class="feature-title">ニックネームで気軽に</h3>
+        <p class="feature-desc">アカウント登録不要。ニックネームを入力するだけで参加OK。Google / Apple でのログインも選択可能。</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">🏆</div>
+        <h3 class="feature-title">盛り上がるランキング</h3>
+        <p class="feature-desc">回答後にリアルタイムで順位を表示。競争心を刺激して、場の熱量を一気に高めます。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-it-works">
+    <p class="section-label" data-num="02">How it works</p>
+    <h2 class="features-heading fade-in">使い方はシンプル</h2>
+    <div class="steps">
+      <div class="step fade-in">
+        <div class="step-num">01</div>
+        <p class="step-title">クイズを作成</p>
+        <p class="step-desc">ホスト役がアプリでクイズセットを作成</p>
+      </div>
+      <div class="step fade-in">
+        <div class="step-num">02</div>
+        <p class="step-title">URLを共有</p>
+        <p class="step-desc">参加者にリンクを送るだけ。アプリ不要</p>
+      </div>
+      <div class="step fade-in">
+        <div class="step-num">03</div>
+        <p class="step-title">みんなで回答</p>
+        <p class="step-desc">リアルタイムで一斉回答。スマホで即参加</p>
+      </div>
+      <div class="step fade-in">
+        <div class="step-num">04</div>
+        <p class="step-title">結果を楽しむ</p>
+        <p class="step-desc">ランキング発表で場の盛り上がりが最高潮に</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2 class="cta-heading fade-in">次の飲み会で、<br>試してみませんか？</h2>
+    <p class="cta-sub fade-in">App Store・Google Play にて近日公開予定</p>
+    <div class="download-buttons fade-in">
+      <a href="#" class="btn-store" aria-label="App Store からダウンロード">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--white)">
+          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+        </svg>
+        <span class="btn-store-label">
+          <span class="btn-store-sub">Download on the</span>
+          <span class="btn-store-name">App Store</span>
+        </span>
+      </a>
+      <a href="#" class="btn-store" aria-label="Google Play からダウンロード">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--white)">
+          <path d="M3 20.5v-17c0-.83 1-.96 1.4-.5l13 8.5c.4.3.4.9 0 1.2l-13 8.5c-.4.46-1.4.33-1.4-.7z" opacity=".6"/>
+          <path d="M3 3.5l9 9-9 9V3.5z" opacity=".8"/>
+          <path d="M3 3.5l9 9 5-5-14-4z"/>
+          <path d="M3 20.5l9-9 5 5-14 4z" opacity=".4"/>
+        </svg>
+        <span class="btn-store-label">
+          <span class="btn-store-sub">Get it on</span>
+          <span class="btn-store-name">Google Play</span>
+        </span>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2024 QuizAir — NakamuraTech</span>
+    <div class="footer-links">
+      <a href="/event/privacy.html">プライバシーポリシー</a>
+      <a href="https://technakamura.com">technakamura.com</a>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
